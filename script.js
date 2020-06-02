@@ -68,6 +68,11 @@ var clearButton = document.querySelector("#clear-button");
 //observe clear-button
 var gobackButton = document.querySelector("#goback-button");
 
+//observe high-score
+var highScoreLink = document.querySelector(".high-score");
+
+var allDonePhrase = document.querySelector("#all-done");
+
 
 //listen to the clicking on start button
 startButton.addEventListener("click", startQuiz);
@@ -105,8 +110,9 @@ event.preventDefault();
         if (timeRemaining <= 0 || current_question === QandA.length) {
             clearInterval(timer);
             finalScore = score;
+            viewHighScores();
             reset();
-            viewHighScores(finalScore);
+
         }
 
         timeRemaining--;   
@@ -120,7 +126,7 @@ event.preventDefault();
 
     //write a function to circulate the questions
     function questions(i){
-   
+        
         questionPortion.innerHTML = "";
         buttonGroup.innerHTML = "";
         correct.classList.add("hide");
@@ -195,53 +201,83 @@ event.preventDefault();
             correct.classList.add("hide");
             wrong.classList.add("hide");
             question.classList.add("hide");
+            current_question = 0;
+            timeRemaining = 75;
+            score = 0;
+
         }
 
-        function viewHighScores(s){
+        function viewHighScores(){
+            allDonePhrase.classList.remove("hide");
             initials.classList.remove("hide");
             initialsWord.classList.remove("hide");
             submitButton.classList.remove("hide");
             
+            
             var newHighscore = document.createElement("h3");
-            newHighscore.textContent = "Your score is: " + s;
+            newHighscore.textContent = "Your score is: " + finalScore;
             scoreDisplay.appendChild(newHighscore);
 
             submitButton.addEventListener("click", saveScore);
 
             function saveScore(event){
+
                 event.preventDefault();
+
                 var name = initials.value;
-                var ul = document.createElement("ul");
-                ul.setAttribute("style", " fontSize: 500px; width:50%; color:black; border:1px solid grey;");
-                ul.innerHTML = name + " - " + finalScore;
+                var highScoreDiv = document.createElement("div");
+                var h5 = document.createElement("h5");
+                highScoreDiv.setAttribute("class", "alert alert-primary");
+                highScoreDiv.setAttribute("style", "width: 50%");
+                h5.innerHTML = name + " -- High Score : " + finalScore;
                 people.push({name: name});
-                scoreDisplay.appendChild(ul);
+                scoreDisplay.appendChild(highScoreDiv);
+                highScoreDiv.appendChild(h5); 
+                
                 clearButton.classList.remove("hide");
                 gobackButton.classList.remove("hide");  
                 initials.classList.add("hide");
                 initialsWord.classList.add("hide");
                 submitButton.classList.add("hide");
+                scoreDisplay.removeChild(newHighscore);
 
                 clearButton.addEventListener("click", clearContent);
 
-            function clearContent(){
-                scoreDisplay.removeChild(ul);
+                function clearContent(){
+                scoreDisplay.removeChild(h5);
+                scoreForm.removeChild(scoreDisplay);
+
             }
+
+
 
             }
 
             gobackButton.addEventListener("click", goback);
 
             function goback(){
-                startPage.classList.remove("hide");
                 scoreForm.classList.add("hide");
+                startPage.classList.remove("hide");              
+
+
             }
 
-            
+            highScoreLink.addEventListener("click", highScoreDisplay);
+
+            function highScoreDisplay(){
+
+                scoreForm.classList.remove("hide"); 
+                clearButton.classList.remove("hide");
+                gobackButton.classList.remove("hide");
+                startPage.classList.add("hide"); 
+                allDonePhrase.classList.add("hide");
+                submitButton.classList.add("hide");
+                initials.classList.add("hide");
+                initialsWord.classList.add("hide");
 
 
-    
-            
+            }        
+          
             
         }
 
