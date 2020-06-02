@@ -1,0 +1,33 @@
+tr {
+    height: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.high-score:hover {
+    color:grey; 
+    text-decoration: none;
+ 
+}
+
+.high-score{
+padding-left: 30px;
+color: black;
+text-decoration: none;
+
+}
+
+.time {
+    text-align: right;
+    padding-right: 40px;
+    
+}
+
+.hide {
+    display: none;
+}
+
+.btn {
+    margin: 5px;
+    color: white!important;
+    font-size: large;
+}
