@@ -244,7 +244,7 @@ event.preventDefault();
                 clearButton.addEventListener("click", clearContent);
 
                 function clearContent(){
-                scoreDisplay.removeChild(h5);
+                scoreDisplay.remove(h5);
                 scoreForm.removeChild(scoreDisplay);
 
             }
